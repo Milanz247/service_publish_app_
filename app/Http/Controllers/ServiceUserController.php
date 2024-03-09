@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Service;
 use App\Models\ServiceImg;
+use App\Models\ServiceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -18,7 +19,7 @@ class ServiceUserController extends Controller
     {
         return view('serviceuser.about');
     }
-    
+
     public function viewHome()
     {
         return view('serviceuser.index');
@@ -49,7 +50,14 @@ class ServiceUserController extends Controller
 
     public function viewOrderList()
     {
-        return view('serviceuser.profile_section.order_list');
+        $neworders = ServiceRequest::with('subcategory')->where('status', 'new')->latest()->get();
+
+
+        $acceptorder = ServiceRequest::with('subcategory')->where('status', 'accept')->latest()->get();
+
+
+
+        return view('serviceuser.profile_section.order_list')->with(compact('neworders'));
     }
 
     public function viewMessages()
@@ -221,5 +229,65 @@ class ServiceUserController extends Controller
         );
 
         return redirect()->back()->with($notification);
+    }
+    public function acceptService(Request $request)
+    {
+        try {
+
+            $id = $request->id;
+            $data = ServiceRequest::findOrFail($id);
+            $data->status = "accept";
+            $data->save();
+
+            $notification =  [
+                'message' => 'Accept Successfully',
+                'alerttype' => 'success'
+            ];
+
+            return $notification;
+        } catch (\Exception $e) {
+
+
+            $notification =  [
+                'message' => 'An error occurred while accepting the service.',
+                'alerttype' => 'error'
+            ];
+
+            return $notification;
+        }
+    }
+
+    public function declineService(Request $request)
+    {
+        try {
+
+            $id = $request->id;
+            $data = ServiceRequest::findOrFail($id);
+            $data->status = "decline";
+            $data->save();
+
+            $notification =  [
+                'message' => ' Successfully Decline Order',
+                'alerttype' => 'success'
+            ];
+
+            return $notification;
+        } catch (\Exception $e) {
+
+
+            $notification =  [
+                'message' => 'An error occurred while accepting the service.',
+                'alerttype' => 'error'
+            ];
+
+            return $notification;
+        }
+    }
+    public function getData(Request $request)
+    {
+
+        $id = $request->input('id');
+        $data = ServiceRequest::with('user','subcategory')->find($id);
+        return response()->json($data);
     }
 }
