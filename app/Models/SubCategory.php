@@ -19,4 +19,9 @@ class SubCategory extends Model
         return $this->hasMany(Service::class);
     }
 
+    public function servicerequest()
+    {
+        return $this->hasMany(ServiceRequest::class);
+    }
+
 }

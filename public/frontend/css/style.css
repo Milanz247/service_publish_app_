@@ -4846,10 +4846,11 @@ span.right-cm {
     border-radius: 3px;
 }
 
-.apled_btn60:hover {
-    background: #242424;
-}
 
+
+.apled_btn60:hover {
+    background: #05264e !important;
+}
 .apled_btn60 .badge {
     padding: 0.40em .6em;
     font-size: 10px;
@@ -4860,6 +4861,45 @@ span.right-cm {
     border-radius: 3px;
     margin-right: 8px;
 }
+
+
+
+.apled_btn123 {
+    margin-top: 20px;
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #fff;
+    border: 0;
+    background: rgb(209, 15, 15);
+    height: 30px;
+    text-transform: uppercase;
+    padding: 0 10px;
+    border-radius: 3px;
+}
+
+.apled_btn123:hover {
+    background: rgb(95, 10, 10);
+}
+
+.apled_btn124 {
+    margin-top: 20px;
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #fff;
+    border: 0;
+    background:  rgb(3, 163, 57);
+    height: 30px;
+    text-transform: uppercase;
+    padding: 0 10px;
+    border-radius: 3px;
+}
+
+.apled_btn124:hover {
+    background: rgb(11, 99, 40);
+}
+
 
 .applied_item a {
     font-size: 16px;

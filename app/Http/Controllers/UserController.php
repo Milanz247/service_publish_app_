@@ -13,6 +13,7 @@ use App\Models\User;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\ServerBag;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -161,42 +162,53 @@ class UserController extends Controller
         return response()->json($services);
     }
 
-
     public function store(Request $request)
     {
-        // dd($request);
-        $validatedData = $request->validate([
-            'job_subcategory' => 'required',
-            'title' => 'required',
-            'location' => 'required',
-        ]);
-        $urgency = $request->has('urgent_job') ? 1 : 0;
-        $schedule_job = $request->has('schedule_job') ? 1 : 0;
+        try {
+            $validatedData = $request->validate([
+                'job_subcategory' => 'required',
+                'title' => 'required',
+                'location' => 'required',
+            ]);
 
+            $urgency = $request->has('urgent_job') ? 1 : 0;
+            $schedule_job = $request->has('schedule_job') ? 1 : 0;
 
-        $servicerequest = new ServiceRequest();
-        $servicerequest->job_subcategory_id = $validatedData['job_subcategory'];
-        $servicerequest->title = $validatedData['title'];
-        $servicerequest->location = $validatedData['location'];
-        $servicerequest->description = $request->description;
-        $servicerequest->schedule_job = $schedule_job;
-        $servicerequest->budget = $request->budget;
-        $servicerequest->urgent_job = $urgency;
-        $servicerequest->status = 'new';
-        $servicerequest->service_user_id = $request->service_user_id;
-        $servicerequest->user_id = $request->user_id;
-        $servicerequest->schedule_date = $request->schedule_date;
+            $servicerequest = new ServiceRequest();
+            $servicerequest->job_subcategory_id = $validatedData['job_subcategory'];
+            $servicerequest->title = $validatedData['title'];
+            $servicerequest->location = $validatedData['location'];
+            $servicerequest->description = $request->description;
+            $servicerequest->schedule_job = $schedule_job;
+            $servicerequest->budget = $request->budget;
+            $servicerequest->urgent_job = $urgency;
+            $servicerequest->status = 'new';
+            $servicerequest->service_user_id = $request->service_user_id;
+            $servicerequest->user_id = $request->user_id;
+            $servicerequest->schedule_date = $request->schedule_date;
 
+            $servicerequest->save();
 
-        $servicerequest->save();
+            $notification = array(
+                'message' => 'Send Request Successfully',
+                'alert-type' => 'success'
+            );
 
-        $notification = array(
-            'message' => ' Send Request Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification);
-
+            return redirect()->back()->with($notification);
+        } catch (ValidationException $e) {
+            // Handle validation errors
+            $notification = array(
+                'message' => $e->validator->errors()->first(),
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->withInput()->with($notification);
+        } catch (\Exception $e) {
+            // Handle other exceptions here
+            $notification = array(
+                'message' => 'An error occurred while processing your request',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
     }
 }
-

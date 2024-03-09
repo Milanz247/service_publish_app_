@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="title-bar-text">
-                        <li class="breadcrumb-item"><a href="{{ route('view.serviceuser.home')}}"">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('view.serviceuser.home') }}"">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">My Account</li>
                     </ol>
                 </div>
@@ -26,6 +26,7 @@
                     @include('serviceuser.tools.profile_navigation')
 
                     @yield('profile')
+
 
                 </div>
             </div>

@@ -54,6 +54,7 @@
     <script src="{{ asset('frontend/vendor/OwlCarousel/owl.carousel.js') }}"></script>
     <script src="{{ asset('frontend/vendor/semantic/semantic.min.js') }}"></script>
     <script src="{{ asset('frontend/js/custom1.js') }}"></script>
+    
     <script>
         window.oncontextmenu = function() {
             return false;

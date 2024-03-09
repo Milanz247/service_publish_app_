@@ -12,14 +12,14 @@
         {{-- <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('view.sureview') ? 'active' : '' }}" href="{{route('view.sureview')}}">Reviews</a>
         </li>
+ <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('view.sumessages') ? 'active' : '' }}" href="{{route('view.sumessages')}}">Messages</a>
+        </li> --}}
 
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('view.suorder.list') ? 'active' : '' }}" href="{{route('view.suorder.list')}}">Order List</a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('view.sumessages') ? 'active' : '' }}" href="{{route('view.sumessages')}}">Messages</a>
-        </li> --}}
 
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('view.service.section') ? 'active' : '' }}" href="{{route('view.service.section')}}">Service Section</a>

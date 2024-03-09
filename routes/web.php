@@ -18,13 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-route::get('/',[FrontendController::class,'welcome'])->name('/');
+route::get('/', [FrontendController::class, 'welcome'])->name('/');
 route::get('/redirect', [HomeController::class, 'redirect']);
 
 
 
 
-route::get('/get-subcategory',[FrontendController::class,'getSubcategory']);
+route::get('/get-subcategory', [FrontendController::class, 'getSubcategory']);
 
 
 
@@ -70,11 +70,9 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
 
 
     route::get('/view-service', [UserController::class, 'viewService'])->name('view.user.service');
-    route::get('/view-service-profile{id}',[UserController::class,'viewSrviceProfile'])->name('view.service.profile');
+    route::get('/view-service-profile{id}', [UserController::class, 'viewSrviceProfile'])->name('view.service.profile');
     route::get('/get-registration', [UserController::class, 'getRegistration'])->name('get.registration');
     Route::post('/hireme', [UserController::class, 'store'])->name('hireme.store');
-
-
 });
 
 
@@ -102,7 +100,27 @@ Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(fu
     route::post('/update-profile-image', [ServiceUserController::class, 'updateProfileImage'])->name('view.update.suprofile.image');
     route::post('/profile-update', [ServiceUserController::class, 'updateProfile'])->name('profile.update');
     route::post('/register-service', [ServiceUserController::class, 'registerService'])->name('register.service');
-    route::post('/delete-service',[ServiceUserController::class,'deleteService'])->name('delete.service');
+    route::post('/delete-service', [ServiceUserController::class, 'deleteService'])->name('delete.service');
+    route::post('/accept-service', [ServiceUserController::class, 'acceptService']);
+    route::post('/decline-service', [ServiceUserController::class, 'declineService']);
+    route::post('/get-data', [ServiceUserController::class, 'getData']);
+
+
+
+
+
+
+
+
+
+    // route::get('/',[::class,''])->name('');
+    // route::get('/',[::class,''])->name('');
+    // route::get('/',[::class,''])->name('');
+    // route::get('/',[::class,''])->name('');
+    // route::get('/',[::class,''])->name('');
+    // route::get('/',[::class,''])->name('');
+    // route::get('/',[::class,''])->name('');
+
 
 });
 
