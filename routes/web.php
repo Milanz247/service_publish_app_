@@ -101,9 +101,8 @@ Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(fu
     route::post('/profile-update', [ServiceUserController::class, 'updateProfile'])->name('profile.update');
     route::post('/register-service', [ServiceUserController::class, 'registerService'])->name('register.service');
     route::post('/delete-service', [ServiceUserController::class, 'deleteService'])->name('delete.service');
-    route::post('/accept-service', [ServiceUserController::class, 'acceptService']);
-    route::post('/decline-service', [ServiceUserController::class, 'declineService']);
-    route::post('/get-data', [ServiceUserController::class, 'getData']);
+    route::post('/update-service-status', [ServiceUserController::class, 'updateStatus']);
+
 
 
 
