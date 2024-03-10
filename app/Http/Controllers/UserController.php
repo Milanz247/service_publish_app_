@@ -179,9 +179,9 @@ class UserController extends Controller
 
         $user = User::find($id);
 
-        $reviews = Review::with('user')->where('service_user_id',$id)->get();
+        $reviews = Review::with('user')->where('service_user_id', $id)->get();
 
-        return view('user.single_service_view')->with(compact('services', 'user','reviews'));
+        return view('user.single_service_view')->with(compact('services', 'user', 'reviews'));
     }
 
     public  function getRegistration(Request $request)
