@@ -9,9 +9,7 @@
             <a class="nav-link {{ request()->routeIs('view.suprofile') ? 'active' : '' }}" href="{{route('view.suprofile')}}">Profile</a>
         </li>
 
-        {{-- <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('view.sureview') ? 'active' : '' }}" href="{{route('view.sureview')}}">Reviews</a>
-        </li>
+        {{--
  <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('view.sumessages') ? 'active' : '' }}" href="{{route('view.sumessages')}}">Messages</a>
         </li> --}}
@@ -25,7 +23,9 @@
             <a class="nav-link {{ request()->routeIs('view.service.section') ? 'active' : '' }}" href="{{route('view.service.section')}}">Service Section</a>
         </li>
 
-
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('view.sureview') ? 'active' : '' }}" href="{{route('view.sureview')}}">Reviews</a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('view.susetting') ? 'active' : '' }}" href="{{ route('view.susetting')}}"><i class="fas fa-cog"></i></a>

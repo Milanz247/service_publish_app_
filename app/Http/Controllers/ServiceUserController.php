@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Review;
 use App\Models\Service;
 use App\Models\ServiceImg;
 use App\Models\ServiceRequest;
@@ -45,7 +46,8 @@ class ServiceUserController extends Controller
 
     public function viewReviews()
     {
-        return view('serviceuser.profile_section.review');
+        $reviews = Review::with('user')->where('service_user_id',Auth::user()->id)->get();
+        return view('serviceuser.profile_section.review', compact('reviews'));
     }
     public function viewOrderList()
     {

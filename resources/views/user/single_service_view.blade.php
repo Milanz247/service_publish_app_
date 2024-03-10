@@ -55,16 +55,7 @@
                                             class="far fa-edit"></i>www.blogsite.com</a></li>
                             </ul>
                         </div>
-                        <div class="group_skills_bar">
-                            <h6>Profile Completeness</h6>
-                            <div class="group_bar1">
-                                <span>90%</span>
-                                <div class="progress skill_process">
-                                    <div class="progress-bar progress_bar_skills" role="progressbar" style="width: 90%;"
-                                        aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="rlt_section">
                             <div class="rtl_left">
                                 <h6>Rating</h6>
@@ -306,105 +297,62 @@
                                 </div>
                                 <div class="job_bid_body">
                                     <ul class="all_applied_jobs jobs_bookmarks">
+                                        @foreach ($reviews as $review)
                                         <li>
                                             <div class="applied_candidates_item">
                                                 <div class="row">
                                                     <div class="col-xl-7">
                                                         <div class="applied_candidates_dt">
                                                             <div class="candi_img">
-                                                                <img src="images/homepage/candidates/img-2.jpg"
-                                                                    alt="">
+                                                                @if ($review->user->image)
+                                                                    <img src="{{ asset('images/user_profile/' . $review->user->image) }}"
+                                                                        class="img-thumbnail" alt="Cinque Terre">
+                                                                @else
+                                                                    <img src="{{ asset('images/profile/userd.png') }}" class="img-thumbnail"
+                                                                        alt="Cinque Terre">
+                                                                @endif
                                                             </div>
+
                                                             <div class="candi_dt">
-                                                                <a href="other_freelancer_reviews.html#">Johnson Dua</a>
-                                                                <div class="candi_cate">UX Designer</div>
+                                                                <a href="my_freelancer_reviews.html#">{{ $review->user->fname }}
+                                                                    {{ $review->user->lname }}</a>
+                                                                <div class="candi_cate"><span class="badge badge-secondary"
+                                                                        style="font-size: 12px;">Reviewed
+                                                                        {{ $review->created_at->diffInDays(now()) }} days ago
+                                                                    </span></div>
+
                                                                 <div class="rating_candi">Rating
                                                                     <div class="star">
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <span>4.9</span>
+                                                                        @for ($i = 1; $i <= 5; $i++)
+                                                                            @if ($i <= $review->rating)
+                                                                                <i class="fas fa-star"></i>
+                                                                            @else
+                                                                                <i class="far fa-star"></i>
+                                                                            @endif
+                                                                        @endfor
+                                                                        <span>{{ $review->rating }}</span>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="btn_link24 review_user">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                                        elementum, nibh et aliquam pellentesque, risus libero aliquet dolor,
-                                                        quis hendrerit nisi augue et purus.</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="applied_candidates_item">
-                                                <div class="row">
-                                                    <div class="col-xl-7">
-                                                        <div class="applied_candidates_dt">
-                                                            <div class="candi_img">
-                                                                <img src="images/homepage/candidates/img-5.jpg"
-                                                                    alt="">
-                                                            </div>
-                                                            <div class="candi_dt">
-                                                                <a href="other_freelancer_reviews.html#">Jassica
-                                                                    William</a>
-                                                                <div class="candi_cate">Freelancer</div>
-                                                                <div class="rating_candi">Rating
-                                                                    <div class="star">
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <span>5.0</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                    @if ($review->description)
+                                                        <p>{{ $review->description }}</p>
+                                                    @else
+                                                        <div class="text-center">
+                                                            <span class="badge badge-dark" style="font-size: 13px; width:300px;">No
+                                                                Comments</span>
+
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 </div>
-                                                <div class="btn_link24 review_user">
-                                                    <p>Awesome work, definitely will rehire. Poject was completed not only
-                                                        with the requirements, but on time, within our small budget.</p>
-                                                </div>
+
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="applied_candidates_item">
-                                                <div class="row">
-                                                    <div class="col-xl-7">
-                                                        <div class="applied_candidates_dt">
-                                                            <div class="candi_img">
-                                                                <img src="images/homepage/candidates/img-3.jpg"
-                                                                    alt="">
-                                                            </div>
-                                                            <div class="candi_dt">
-                                                                <a href="other_freelancer_reviews.html#">Joginder Singh</a>
-                                                                <div class="candi_cate">Employer</div>
-                                                                <div class="rating_candi">Rating
-                                                                    <div class="star">
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <span>4.5</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="btn_link24 review_user">
-                                                    <p>Fusce sodales consectetur lacus eu vestibulum. Orci varius natoque
-                                                        penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                                                        Aenean consequat velit aliquet tortor scelerisque</p>
-                                                </div>
-                                            </div>
-                                        </li>
+                                    @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -486,53 +434,53 @@
     <!-- Modal -->
     <form action="{{ route('hireme.store') }}" method="post">
         @csrf
-    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="label15">Select Registration*</label>
+        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="label15">Select Registration*</label>
 
-                        <select id="category-select" class="ui fluid search selection dropdown skills-search"
-                            name="job_subcategory">
-                            <option value="">Select Registration</option>
+                            <select id="category-select" class="ui fluid search selection dropdown skills-search"
+                                name="job_subcategory">
+                                <option value="">Select Registration</option>
 
-                        </select>
-                    </div>
+                            </select>
+                        </div>
 
-                    <div class="form-group pt-2">
-                        <label class="label15">Title*</label>
-                        <input type="title" name="title" class="job-input" placeholder="Enter  ">
-                    </div>
-                    <div class="form-group pt-2">
-                        <label class="label15">Location*</label>
-                        <input type="title" class="job-input" name="location" placeholder="Enter  ">
-                    </div>
-                    <div class="form-group">
-                        <label class="label15">Description*</label>
-                        <textarea name="description" class="note-input" placeholder="Enter your Job details here"></textarea>
-                    </div>
+                        <div class="form-group pt-2">
+                            <label class="label15">Title*</label>
+                            <input type="title" name="title" class="job-input" placeholder="Enter  ">
+                        </div>
+                        <div class="form-group pt-2">
+                            <label class="label15">Location*</label>
+                            <input type="title" class="job-input" name="location" placeholder="Enter  ">
+                        </div>
+                        <div class="form-group">
+                            <label class="label15">Description*</label>
+                            <textarea name="description" class="note-input" placeholder="Enter your Job details here"></textarea>
+                        </div>
                         <div class="form-group">
                             <div class="ui form">
                                 <div class="grouped fields d-flex justify-content-between">
                                     <div class="field fltr-radio">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="schedule_job" id="schedule_job"
-                                               tabindex="0" class="hidden">
+                                            <input type="radio" name="schedule_job" id="schedule_job" tabindex="0"
+                                                class="hidden">
                                             <label style="font-size: 15px; font-weight:bold;">Schedule
                                                 Job</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio"   checked="checked" name="urgent_job" id="urgent_job"
+                                            <input type="radio" checked="checked" name="urgent_job" id="urgent_job"
                                                 tabindex="0" class="hidden">
                                             <label style="font-size: 15px; font-weight:bold;">Urgent Job
                                             </label>
@@ -556,19 +504,19 @@
                             </div>
                         </div>
 
-                         <input type="hidden" value="{{ $user->id }}" name="service_user_id">
-                         <input type="hidden" value="{{ Auth::user()->id; }}" name="user_id">
+                        <input type="hidden" value="{{ $user->id }}" name="service_user_id">
+                        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
 
 
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </form>
 @endsection
 @section('scripts')
@@ -600,7 +548,7 @@
             });
         });
     </script>
-      <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             var scheduleJobRadio = document.getElementById("schedule_job");
             var urgentJobRadio = document.getElementById("urgent_job");
