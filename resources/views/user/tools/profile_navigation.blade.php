@@ -25,7 +25,9 @@
             <a class="nav-link {{ request()->routeIs('view.service.section') ? 'active' : '' }}" href="{{route('view.service.section')}}">Service Section</a>
         </li> --}}
 
-
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('view.applied.service.list') ? 'active' : '' }}" href="{{route('view.applied.service.list')}}">Applied Service List</a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('view.user.setting') ? 'active' : '' }}" href="{{ route('view.user.setting')}}"><i class="fas fa-cog"></i></a>

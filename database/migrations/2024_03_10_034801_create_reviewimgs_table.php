@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('service_requests', function (Blueprint $table) {
-            $table->string('status')->nullable();
-
+        Schema::create('reviewimgs', function (Blueprint $table) {
+            $table->id();
+            $table->integer('review_id');
+            $table->string('photo_name');
+            $table->timestamps();
         });
     }
 
@@ -22,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('service_requests', function (Blueprint $table) {
-            $table->dropColumn('status');
-
-        });
+        Schema::dropIfExists('reviewimgs');
     }
 };

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Category;
+use App\Models\Review;
+use App\Models\Reviewimg;
 use App\Models\ServiceRequest;
 use App\Models\Service;
 use App\Models\ServiceImg;
@@ -33,6 +35,34 @@ class UserController extends Controller
 
             'user' => $request->user(),
         ]);
+    }
+
+    public function viewAppliedService()
+    {
+        $statuses = ['new', 'decline', 'accept', 'complete'];
+        $orders = [];
+        $serviceUsers = [];
+        $reviewexist = [];
+        $id = Auth::user()->id;
+
+        foreach ($statuses as $status) {
+            $orders[$status] = ServiceRequest::with('subcategory', 'user')
+                ->where('status', $status)
+                ->where('user_id', $id)
+                ->latest()
+                ->get();
+
+            // Retrieve service user for each service request
+            foreach ($orders[$status] as $order) {
+                $sid = $order->service_user_id;
+                $serviceUsers[$order->id] = User::find($sid);
+                $id = $order->id;
+
+                $reviewexist[$order->id] = Review::where('service_id', $id)->exists();
+            }
+        }
+
+        return view('user.profile_section.service_order_list', compact('orders', 'serviceUsers', 'reviewexist'));
     }
 
     public function updateProfileImage(Request $request)
@@ -210,5 +240,68 @@ class UserController extends Controller
             );
             return redirect()->back()->with($notification);
         }
+    }
+
+    public function deleteApplyService(Request $request)
+    {
+        try {
+            $id = $request->input('id');
+            $data = ServiceRequest::findOrFail($id);
+            $data->delete(); // Deleting the record instead of saving it
+
+            $notification = [
+                'message' => "Delete Successfully",
+                'alerttype' => 'success'
+            ];
+
+            return response()->json($notification);
+        } catch (\Exception $e) {
+            $notification = [
+                'message' => 'An error occurred while performing the action.',
+                'alerttype' => 'error'
+            ];
+
+            return response()->json($notification, 500);
+        }
+    }
+
+    public function addReview(Request $request)
+    {
+        $validatedData = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+
+        ]);
+
+        $review_id = Review::insertGetId([
+            'service_id' => $request->service,
+            'user_id' => Auth::user()->id,
+            'service_user_id' => $request->service_user,
+            'rating' =>  $validatedData['rating'],
+            'description' => $request->description,
+            'created_at' => Carbon::now(),
+        ]);
+
+
+        //   ////////// Multiple Image Upload Start ///////////
+
+        $images = $request->file('multi_img');
+        foreach ($images as $img) {
+            $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+            Image::make($img)->resize(917, 1000)->save('frontend/review_imgs/' . $make_name);
+            $uploadPath = 'frontend/review_imgs/' . $make_name;
+            Reviewimg::insert([
+
+                'review_id' => $review_id,
+                'photo_name' => $uploadPath,
+                'created_at' => Carbon::now(),
+
+            ]);
+        }
+        $notification = [
+            'message' => "Successfully",
+            'alerttype' => 'success'
+        ];
+
+        return response()->json($notification);
     }
 }
