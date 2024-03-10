@@ -21,40 +21,7 @@ use Illuminate\Support\Facades\Route;
 route::get('/', [FrontendController::class, 'welcome'])->name('/');
 route::get('/redirect', [HomeController::class, 'redirect']);
 
-
-
-
 route::get('/get-subcategory', [FrontendController::class, 'getSubcategory']);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // User  Routes
 Route::middleware(['auth'])->prefix('user')->group(function () {
@@ -80,10 +47,6 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
 });
 
 
-
-
-
-
 //Service User  Routes
 Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(function () {
 
@@ -107,15 +70,6 @@ Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(fu
     route::post('/delete-service', [ServiceUserController::class, 'deleteService'])->name('delete.service');
     route::post('/update-service-status', [ServiceUserController::class, 'updateStatus']);
 
-
-
-
-
-
-
-
-
-
     // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
@@ -128,3 +82,13 @@ Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(fu
 
 
 require __DIR__ . '/auth.php';
+
+
+
+// Admin Routes
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
+
+require __DIR__ . '/adminauth.php';
