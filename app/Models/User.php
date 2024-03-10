@@ -60,4 +60,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Service::class, 'service_user_id');
     }
+
+
+    public function review()
+    {
+        return $this->hasMany(Review::class, 'user_id');
+    }
 }
