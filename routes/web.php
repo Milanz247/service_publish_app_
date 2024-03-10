@@ -62,6 +62,7 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
     // User Profile Section Routes
     route::get('/view-home', [UserController::class, 'viewHome'])->name('view.user.home');
     route::get('/view-about', [UserController::class, 'viewAbout'])->name('view.user.about');
+    route::get('/view-applied-service-list', [UserController::class, 'viewAppliedService'])->name('view.applied.service.list');
 
 
     route::get('/view-setting', [UserController::class, 'viewSetting'])->name('view.user.setting');
@@ -73,6 +74,9 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
     route::get('/view-service-profile{id}', [UserController::class, 'viewSrviceProfile'])->name('view.service.profile');
     route::get('/get-registration', [UserController::class, 'getRegistration'])->name('get.registration');
     Route::post('/hireme', [UserController::class, 'store'])->name('hireme.store');
+
+    route::post('/delete-apply-service', [UserController::class, 'deleteApplyService']);
+    route::post('/add-review', [UserController::class, 'addReview'])->name('add.review');
 });
 
 
@@ -112,7 +116,6 @@ Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(fu
 
 
 
-    // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
