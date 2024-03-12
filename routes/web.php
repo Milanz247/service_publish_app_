@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceUserController;
 use App\Http\Controllers\UserController;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,40 +23,7 @@ use Illuminate\Support\Facades\Route;
 route::get('/', [FrontendController::class, 'welcome'])->name('/');
 route::get('/redirect', [HomeController::class, 'redirect']);
 
-
-
-
 route::get('/get-subcategory', [FrontendController::class, 'getSubcategory']);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // User  Routes
 Route::middleware(['auth'])->prefix('user')->group(function () {
@@ -80,10 +49,6 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
 });
 
 
-
-
-
-
 //Service User  Routes
 Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(function () {
 
@@ -107,15 +72,6 @@ Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(fu
     route::post('/delete-service', [ServiceUserController::class, 'deleteService'])->name('delete.service');
     route::post('/update-service-status', [ServiceUserController::class, 'updateStatus']);
 
-
-
-
-
-
-
-
-
-
     // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
@@ -125,6 +81,37 @@ Route::middleware(['auth', 'CheckServiceUser'])->prefix('serviceuser')->group(fu
 
 
 });
-
-
 require __DIR__ . '/auth.php';
+
+
+
+// Admin Routes
+Route::get('/admin/dashboard', function () {
+    return view('admin.index');
+})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
+
+Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function () {
+
+    //category routes
+    route::get('/category-view', [AdminController::class, 'viewCategory'])->name('admin.category.view');
+    route::get('/category-delete/{id}', [AdminController::class, 'categoryDelete'])->name('category.delete');
+    route::post('/category-store', [AdminController::class, 'categoryStore'])->name('category.store');
+    route::get('/getCategoryData/{id}', [AdminController::class,'getCategoryData'])->name('getCategoryData');
+    route::post('/category-update', [AdminController::class, 'categoryUpdate'])->name('category.update');
+
+    //subcategory routes
+    route::get('/subcategory-view', [AdminController::class, 'viewsubCategory'])->name('admin.subcategory.view');
+    route::get('/subcategory-delete/{id}', [AdminController::class, 'subCategoryDelete'])->name('subcategory.delete');
+    route::get('/category-get}', [AdminController::class, 'getCategory'])->name('category.get');
+    route::post('/subcategory-store', [AdminController::class, 'subCategoryStore'])->name('subcategory.store');
+    route::get('/get-subcategory-data/{id}', [AdminController::class,'getSubCategoryData'])->name('get.subcategory.data');
+    route::post('/subcategory-update', [AdminController::class, 'SubcategoryUpdate'])->name('subcategory.update');
+
+
+    // route::get('/',[::class,''])->name('');
+    // route::get('/',[::class,''])->name('');
+    // route::get('/',[::class,''])->name('');
+
+
+});
+require __DIR__ . '/adminauth.php';

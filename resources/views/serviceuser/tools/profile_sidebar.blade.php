@@ -13,7 +13,7 @@
                     {{ Auth::user()->fname && Auth::user()->lname
                         ? Auth::user()->fname . ' ' . Auth::user()->lname
                         : Auth::user()->name }}
-                </h4> <span>UX Designer</span>
+                </h4> <span></span>
                 <div class="avialable">Available Full Time<a href="my_freelancer_dashboard.html#"><i
                             class="far fa-edit"></i></a></div>
             </div>
@@ -81,7 +81,7 @@
                         $userAge = Carbon::parse($userBirthday)->age;
                     @endphp
                     <div class="rtl_right2">
-                        <span>{{$userAge}}</span>
+                        <span>{{ $userAge }}</span>
                     </div>
                 </li>
                 <li>
@@ -114,7 +114,7 @@
                             class="fab fa-twitter t1"></i>http://twitter.com/johndoe</a></li>
                 <li><a href="my_freelancer_dashboard.html#" class="social_links"><i
                             class="fab fa-linkedin-in l1"></i>http://linkedin.com/johndoe</a></li>
-               
+
             </ul>
         </div>
     </div>

@@ -15,13 +15,18 @@ class Category extends Model
     ];
 
 
-    public function subcategories()
-    {
-        return $this->hasMany(SubCategory::class, 'category_id', 'id');
-    }
+    // public function subcategories()
+    // {
+    //     return $this->hasMany(SubCategory::class, 'category_id', 'id');
+    // }
 
     public function service()
     {
         return $this->hasMany(Service::class);
+    }
+
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
     }
 }

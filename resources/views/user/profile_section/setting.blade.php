@@ -312,7 +312,6 @@
     <script>
         $(document).ready(function() {
             $('#sendRequestButton').on('click', function() {
-
                 var firstName = $("#fname").val();
                 var lastName = $("#lname").val();
                 var userName = $("#username").val();
@@ -358,7 +357,7 @@
                 };
 
                 $.ajax({
-                    url: '/serviceuser/profile-update',
+                    url: '/user/profile-update',
                     method: 'POST',
                     data: requestData,
                     headers: {

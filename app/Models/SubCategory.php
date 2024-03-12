@@ -9,9 +9,14 @@ class SubCategory extends Model
 {
     use HasFactory;
 
-    public function maincategory()
+    // public function maincategory()
+    // {
+    //     return $this->belongsTo(Category::class,'category_id' , 'id');    //make relationship to  get category name to the subcategory table
+    // }
+    
+    public function category()
     {
-        return $this->belongsTo(Category::class,'category_id' , 'id');    //make relationship to  get category name to the subcategory table
+        return $this->belongsTo(Category::class);
     }
 
     public function service()
@@ -23,5 +28,4 @@ class SubCategory extends Model
     {
         return $this->hasMany(ServiceRequest::class);
     }
-
 }
