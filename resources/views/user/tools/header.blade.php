@@ -99,17 +99,17 @@
                                         <a class="nav-link" href="{{ route('view.user.about') }}">About <span
                                                 class="sr-only"></span></a>
                                     </li>
-
-
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="index.html">Contact Us <span
+                                    <li class="nav-item {{ request()->routeIs('view.user.contact') ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('view.user.contact') }}">Contact Us <span
                                                 class="sr-only"></span></a>
                                     </li>
+
+
 
                                 </ul>
                                 <a href="about.html#" class="search-link" role="button" data-toggle="modal"
                                     data-target="#searchModal"><i class="fas fa-search"></i></a>
-                                <a href="post_a_job.html" class="add-post"></a>
+                                <a href="" class="add-post"></a>
                             </div>
                             <div class="responsive-search order-1">
                                 <input type="text" class="rsp-search" placeholder="Search...">
