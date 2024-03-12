@@ -14,106 +14,73 @@
     </div>
     <main class="browse-section">
         <div class="container">
-            <div class="row">
-                <div class="filter-heading">
-                    <div class="fh-left">
-                        Filters
-                    </div>
-                    <div class="fh-right">
-                        <a href="{{ route('view.user.service') }}">Clear All Filters</a>
-                    </div>
-                </div>
+            <form action="{{ route('filter.service') }}" method="GET">
 
-                <div class="col-md-3">
-                    <div class="fltr-group">
-
-                        <div class="fltr-items-heading">
-                            <div class="fltr-item-left">
-                                <h6>Category</h6>
-                            </div>
-
+                <div class="row">
+                    <div class="filter-heading">
+                        <div class="fh-left">
+                            Filters
                         </div>
-
-                        <select id="category-select" class="ui fluid search selection dropdown skills-search"
-                            name="job_category">
-                            <option value="">Select Category</option>
-                            @foreach ($categories as $categories)
-                                <option value="{{ $categories->id }}">{{ $categories->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="fltr-group">
-
-                        <div class="fltr-items-heading">
-                            <div class="fltr-item-left">
-                                <h6> Sub Category</h6>
-                            </div>
+                        <div class="fh-right">
+                            <a href="{{ route('view.user.service') }}">Clear All Filters</a>
                         </div>
-
-                        <select id="subcategory-select" class="ui fluid search selection dropdown skills-search"
-                            name="job_subcategory">
-                            <option value="">Select Sub Category</option>
-                        </select>
                     </div>
 
-                </div>
-
-                <div class="col-md-3">
-                    <div class="fltr-group fltr-gend">
-                        <div class="fltr-items-heading">
-                            <div class="fltr-item-left">
-                                <h6>Location</h6>
+                    <div class="col-md-3">
+                        <div class="fltr-group">
+                            <div class="fltr-items-heading">
+                                <div class="fltr-item-left">
+                                    <h6>Category</h6>
+                                </div>
                             </div>
-
+                            <select id="category-select" class="ui fluid search selection dropdown skills-search"
+                                name="job_category">
+                                <option value="">Select Category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <select id="location-select" class="ui fluid search selection dropdown skills-search"
-                            name="service_location">
-                            <option value="">Select Location</option>
-                            @foreach ($locations as $locations)
-                                <option value="{{ $locations }}">{{ $locations }}</option>
-                            @endforeach
-                        </select>
                     </div>
 
-                </div>
+                    <div class="col-md-3">
+                        <div class="fltr-group">
+                            <div class="fltr-items-heading">
+                                <div class="fltr-item-left">
+                                    <h6>Sub Category</h6>
+                                </div>
+                            </div>
+                            <select id="subcategory-select" class="ui fluid search selection dropdown skills-search"
+                                name="job_subcategory">
+                                <option value="">Select Sub Category</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 text-center" >
-                    <div class="filter-button mt-6">
-                        <button style="margin-top: 50px;" class="flr-btn ">Search Now</button>
+                    <div class="col-md-3">
+                        <div class="fltr-group fltr-gend">
+                            <div class="fltr-items-heading">
+                                <div class="fltr-item-left">
+                                    <h6>Location</h6>
+                                </div>
+                            </div>
+                            <select id="location-select" class="ui fluid search selection dropdown skills-search"
+                                name="service_location">
+                                <option value="">Select Location</option>
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location }}">{{ $location }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <div class="filter-button mt-6">
+                            <button style="margin-top: 50px;" class="flr-btn">Search Now</button>
+                        </div>
                     </div>
                 </div>
-
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </form>
 
 
             <div class="row">
@@ -124,7 +91,9 @@
                             <div class="mtab-left">
                                 <ul class="browsr-project">
                                     <li>
-                                        <span class="nav-link">Search Results</span>
+                                        <span class="nav-link">Search Results {{ $rowCount = count($foundUsers) }} </span>
+                                        {{-- | <span>category</span> >
+                                        <span>subcategory</span> > <span>location</span>  --}}
                                     </li>
                                 </ul>
                             </div>
@@ -166,7 +135,8 @@
                                                             <h4>{{ $user->fname }} {{ $user->lname }}
                                                             </h4>
                                                         </a>
-                                                        <span><i style="color: orangered" class="fas fa-map-marker-alt"></i>  {{ $user->location }}</span>
+                                                        <span><i style="color: orangered" class="fas fa-map-marker-alt"></i>
+                                                            {{ $user->location }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -191,7 +161,8 @@
                                             </div>
                                             <div class="job-buttons">
                                                 <ul class="link-btn">
-                                                    <li class="cpy-btn"><a href="{{ route('view.service.profile', $user->id) }}"
+                                                    <li class="cpy-btn"><a
+                                                            href="{{ route('view.service.profile', $user->id) }}"
                                                             class="link-j1" title="View Profile">View Profile</a></li>
 
                                                     <li class="bkd-pm"><button class="bookmark1" title="bookmark"><i

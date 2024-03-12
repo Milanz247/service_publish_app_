@@ -14,7 +14,13 @@ class FrontendController extends Controller
 
     public function welcome()
     {
-        return view('frontend.home');
+        $users = Service::distinct()->pluck('service_user_id')->toArray();
+        $foundUsers = User::whereIn('id', $users)->get();
+
+        $locations = Service::distinct()->pluck('service_location')->toArray();
+        $categories = Category::all();
+
+        return view('frontend.home')->with(compact('foundUsers','categories','locations'));
     }
 
 
@@ -25,8 +31,21 @@ class FrontendController extends Controller
         return response()->json(['subcategories' => $subcategories]);
     }
 
-    
+    public function riderctRegisterbalde($usertype)
+    {
 
+        return view('auth.register');
+    }
+
+    public function viewAbout()
+    {
+        return view('frontend.about');
+    }
+
+    public function viewContact()
+    {
+        return view('frontend.contact');
+    }
 
 
 }

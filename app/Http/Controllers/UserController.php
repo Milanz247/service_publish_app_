@@ -21,12 +21,24 @@ class UserController extends Controller
 {
     public function viewHome()
     {
-        return view('user.index');
+        $users = Service::distinct()->pluck('service_user_id')->toArray();
+        $foundUsers = User::whereIn('id', $users)->get();
+
+        $locations = Service::distinct()->pluck('service_location')->toArray();
+        $categories = Category::all();
+
+
+        return view('user.index')->with(compact('foundUsers','categories','locations'));
     }
 
     public function viewAbout()
     {
         return view('user.about');
+    }
+
+    public function viewContact()
+    {
+        return view('user.contact');
     }
 
     public function viewSetting(Request $request)
@@ -168,6 +180,7 @@ class UserController extends Controller
         $categories = Category::all();
         $users = Service::distinct()->pluck('service_user_id')->toArray();
         $foundUsers = User::whereIn('id', $users)->get();
+
         return view('user.service')->with(compact('foundUsers', 'locations', 'categories'));
     }
 
@@ -306,5 +319,32 @@ class UserController extends Controller
         ];
 
         return response()->json($notification);
+    }
+
+
+    public function filterService(Request $request)
+    {
+        $category = $request->input('job_category');
+        $subcategory = $request->input('job_subcategory');
+        $location = $request->input('service_location');
+
+        $query = Service::query();
+
+        if ($category) {
+            $query->where('service_category_id', $category);
+        }
+
+        if ($subcategory) {
+            $query->where('service_subcategory_id', $subcategory);
+        }
+        if ($location) {
+            $query->where('service_location', $location);
+        }
+        $users = $query->distinct()->pluck('service_user_id')->toArray();
+        $locations = Service::distinct()->pluck('service_location')->toArray();
+        $categories = Category::all();
+        $foundUsers = User::whereIn('id', $users)->get();
+
+        return view('user.service')->with(compact('foundUsers', 'locations', 'categories','category','subcategory','location'));
     }
 }
