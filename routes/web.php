@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -106,6 +107,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     route::post('/subcategory-store', [AdminController::class, 'subCategoryStore'])->name('subcategory.store');
     route::get('/get-subcategory-data/{id}', [AdminController::class,'getSubCategoryData'])->name('get.subcategory.data');
     route::post('/subcategory-update', [AdminController::class, 'SubcategoryUpdate'])->name('subcategory.update');
+
+    route::get('/view-profile-edit', [AdminProfileController::class, 'viewProfileEdit'])->name('view.profile.edit');
+    route::post('/profile-update', [AdminProfileController::class, 'profileUpdate'])->name('admin.profile.update');
+    Route::post('/password/update',  [AdminProfileController::class, 'updatePassword'])->name('password.update');
 
 
     // route::get('/',[::class,''])->name('');
