@@ -8,7 +8,8 @@ use App\Models\SubCategory;
 
 class AdminController extends Controller
 {
-    // Ctegory Part  Start
+
+    //  <--------------------------------------------------------- Ctegory Part Start ------------------------------------------------------------------->
     public function viewCategory()
     {
         $catregory = Category::get();
@@ -78,15 +79,11 @@ class AdminController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    // Ctegory Part  End
+    //  <--------------------------------------------------------- Ctegory Part End ------------------------------------------------------------------->
 
 
 
-
-
-
-
-    // SubCtegory Part  Start
+    //  <--------------------------------------------------------- SubCtegory Part  Start ------------------------------------------------------------------->
     public function viewsubCategory()
     {
         $subcatregory = SubCategory::with('category')->get();
@@ -146,25 +143,25 @@ class AdminController extends Controller
         ]);
     }
 
-     public function SubcategoryUpdate(Request $request)
-     {
-         $subcategory_id = $request->input('subcategory_id');
-         $subcategory = SubCategory::findOrFail($subcategory_id);
+    public function SubcategoryUpdate(Request $request)
+    {
+        $subcategory_id = $request->input('subcategory_id');
+        $subcategory = SubCategory::findOrFail($subcategory_id);
 
-         $subcategory->category_id =  $request->input('category_id');
-         $subcategory->name = $request->input('subcategory_name');
-         $subcategory->icon = $request->input('subcategory_icon');
+        $subcategory->category_id =  $request->input('category_id');
+        $subcategory->name = $request->input('subcategory_name');
+        $subcategory->icon = $request->input('subcategory_icon');
 
-         $subcategory->save();
+        $subcategory->save();
 
-         $notification = array(
-             'message' => 'updated successfully',
-             'alert-type' => 'success'
-         );
+        $notification = array(
+            'message' => 'updated successfully',
+            'alert-type' => 'success'
+        );
 
-         return redirect()->back()->with($notification);
-     }
+        return redirect()->back()->with($notification);
+    }
 
-    // SubCtegory Part  End
+    //  <--------------------------------------------------------- SubCtegory Part End ------------------------------------------------------------------->
 
 }
