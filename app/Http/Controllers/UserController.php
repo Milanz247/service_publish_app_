@@ -31,7 +31,6 @@ class UserController extends Controller
         $slider = Slider::where('status', 1)->take(6)->get();
 
         return view('user.index')->with(compact('foundUsers', 'categories', 'locations', 'slider'));
-
     }
 
     public function viewAbout()
@@ -286,43 +285,49 @@ class UserController extends Controller
 
     public function addReview(Request $request)
     {
-        $validatedData = $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-
-        ]);
-
-        $review_id = Review::insertGetId([
-            'service_id' => $request->service,
-            'user_id' => Auth::user()->id,
-            'service_user_id' => $request->service_user,
-            'rating' =>  $validatedData['rating'],
-            'description' => $request->description,
-            'created_at' => Carbon::now(),
-        ]);
-
-
-        //   ////////// Multiple Image Upload Start ///////////
-
-        $images = $request->file('multi_img');
-        foreach ($images as $img) {
-            $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-            Image::make($img)->resize(917, 1000)->save('frontend/review_imgs/' . $make_name);
-            $uploadPath = 'frontend/review_imgs/' . $make_name;
-            Reviewimg::insert([
-
-                'review_id' => $review_id,
-                'photo_name' => $uploadPath,
-                'created_at' => Carbon::now(),
-
+        try {
+            $validatedData = $request->validate([
+                'rating' => 'required|integer|min:1|max:5',
             ]);
-        }
-        $notification = [
-            'message' => "Successfully",
-            'alerttype' => 'success'
-        ];
 
-        return response()->json($notification);
+            $review_id = Review::insertGetId([
+                'service_id' => $request->service,
+                'user_id' => Auth::user()->id,
+                'service_user_id' => $request->service_user,
+                'rating' =>  $validatedData['rating'],
+                'description' => $request->description,
+                'created_at' => Carbon::now(),
+            ]);
+
+            // Multiple Image Upload Start
+            $images = $request->file('multi_img');
+            foreach ($images as $img) {
+                $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+                Image::make($img)->resize(917, 1000)->save('frontend/review_imgs/' . $make_name);
+                $uploadPath = 'frontend/review_imgs/' . $make_name;
+                Reviewimg::insert([
+                    'review_id' => $review_id,
+                    'photo_name' => $uploadPath,
+                    'created_at' => Carbon::now(),
+                ]);
+            }
+
+            $notification = [
+                'message' => "Successfully",
+                'alerttype' => 'success'
+            ];
+
+            return response()->json($notification);
+        } catch (\Exception $e) {
+            // Log the error or handle it as required
+            $notification = [
+                'message' => "An error occurred: " . $e->getMessage(),
+                'alerttype' => 'error'
+            ];
+            return response()->json($notification, 500); // Return a proper error response
+        }
     }
+
 
 
     public function filterService(Request $request)
@@ -348,6 +353,6 @@ class UserController extends Controller
         $categories = Category::all();
         $foundUsers = User::whereIn('id', $users)->get();
 
-        return view('user.service')->with(compact('foundUsers', 'locations', 'categories','category','subcategory','location'));
+        return view('user.service')->with(compact('foundUsers', 'locations', 'categories', 'category', 'subcategory', 'location'));
     }
 }

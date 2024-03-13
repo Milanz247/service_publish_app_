@@ -104,7 +104,7 @@
 
                                                     <div class="d-flex">
 
-                                                        <a href="{{ route('slider.delete', $user->id) }}"
+                                                        <a href="{{ route('user.delete', $user->id) }}"
                                                             class="btn btn-danger shadow btn-xs sharp"><i
                                                                 class="fa fa-trash"></i></a>
                                                     </div>

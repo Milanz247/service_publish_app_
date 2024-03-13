@@ -133,6 +133,7 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     route::get('/slider-delete/{id}', [AdminController::class, 'sliderDelete'])->name('slider.delete');
 
     route::get('/user-view', [AdminController::class, 'viewUser'])->name('admin.user.view');
+    route::get('/user-delete/{id}', [AdminController::class, 'userDelete'])->name('user.delete');
 
 
     // route::get('/',[::class,''])->name('slider.updateStatus');

@@ -83,10 +83,16 @@
                     </li>
                     <li class="nav-item dropdown header-profile">
                         <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                            <img src="images/profile/pic1.jpg" width="20" alt="">
+                            @if (Auth::user()->image)
+                                <img src="{{ asset('images/admin_user_profile/' . Auth::user()->image) }}"
+                                    class="img-thumbnail" alt="Cinque Terre">
+                            @else
+                                <img src="{{ asset('images/profile/userd.png') }}" class="img-thumbnail"
+                                    alt="Cinque Terre">
+                            @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <a href="{{route('view.profile.edit')}}" class="dropdown-item ai-icon">
+                            <a href="{{ route('view.profile.edit') }}" class="dropdown-item ai-icon">
                                 <svg id="icon-user2" xmlns="http://www.w3.org/2000/svg" class="text-primary"
                                     width="18" height="18" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -97,7 +103,7 @@
                                 <span class="ms-2">Profile </span>
                             </a>
 
-                            <a href="{{route('admin.logout')}}" class="dropdown-item ai-icon">
+                            <a href="{{ route('admin.logout') }}" class="dropdown-item ai-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18"
                                     height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

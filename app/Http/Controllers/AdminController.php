@@ -22,41 +22,61 @@ class AdminController extends Controller
 
     public function categoryDelete($id)
     {
+        try {
+            // Find the category by ID
+            $category = Category::findOrFail($id);
 
-        // Find the category by ID
-        $category = Category::findOrFail($id);
+            // Delete the category
+            $category->delete();
 
-        // Delete the category
-        $category->delete();
+            $notification = array(
+                'message' => 'Delete Successfully',
+                'alert-type' => 'success'
+            );
 
-        $notification = array(
-            'message' => 'Delete Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            // Handle the exception, for example, log it and return an error message
+            \Log::error('Error occurred while deleting category: ' . $e->getMessage());
+            $notification = array(
+                'message' => 'An error occurred while deleting the category.',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
     }
+
 
     public function categoryStore(Request $request)
     {
+        try {
+            $validatedData = $request->validate([
+                'category_name' => 'required|string|max:255',
+            ]);
 
-        $validatedData = $request->validate([
-            'category_name' => 'required|string|max:255',
-        ]);
+            // Create a new category instance
+            $category = new Category();
+            $category->name = $validatedData['category_name'];
+            $category->icon = $request->category_icon;
+            $category->save();
 
-        // Create a new category instance
-        $category = new Category();
-        $category->name = $validatedData['category_name'];
-        $category->icon = $request->category_icon;
-        $category->save();
+            $notification = array(
+                'message' => 'Category created successfully!',
+                'alert-type' => 'success'
+            );
 
-        $notification = array(
-            'message' => 'Category created successfully!',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            // Handle the exception, for example, log it and return an error message
+            \Log::error('Error occurred while creating category: ' . $e->getMessage());
+            $notification = array(
+                'message' => 'An error occurred while creating the category.',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
     }
+
 
     public function getCategoryData($id)
     {
@@ -66,22 +86,34 @@ class AdminController extends Controller
 
     public function categoryUpdate(Request $request)
     {
-        $categoryId = $request->input('category_id');
-        $category = Category::findOrFail($categoryId);
+        try {
+            $categoryId = $request->input('category_id');
+            $category = Category::findOrFail($categoryId);
 
+            $category->name = $request->input('category_name');
+            $category->icon = $request->input('category_icon');
 
-        $category->name = $request->input('category_name');
-        $category->icon = $request->input('category_icon');
+            $category->save();
 
-        $category->save();
+            $notification = array(
+                'message' => 'Category updated successfully',
+                'alert-type' => 'success'
+            );
 
-        $notification = array(
-            'message' => 'Category updated successfully',
-            'alert-type' => 'success'
-        );
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            \Log::error('Error updating category: ' . $e->getMessage());
 
-        return redirect()->back()->with($notification);
+            $notification = array(
+                'message' => 'Error occurred while updating category',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
     }
+
 
     //  <--------------------------------------------------------- Ctegory Part End ------------------------------------------------------------------->
 
@@ -96,16 +128,29 @@ class AdminController extends Controller
 
     public function subCategoryDelete($id)
     {
-        $subcategory = SubCategory::findOrFail($id);
-        $subcategory->delete();
+        try {
+            $subcategory = SubCategory::findOrFail($id);
+            $subcategory->delete();
 
-        $notification = array(
-            'message' => 'Delete Successfully',
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Delete Successfully',
+                'alert-type' => 'success'
+            );
 
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            \Log::error('Error deleting subcategory: ' . $e->getMessage());
+
+            $notification = array(
+                'message' => 'Error occurred while deleting subcategory',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
     }
+
 
     public function getCategory()
     {
@@ -115,24 +160,37 @@ class AdminController extends Controller
 
     public function subCategoryStore(Request $request)
     {
-        $validatedData = $request->validate([
-            'category_id' => 'required|string|max:255',
-            'subcategory_name' => 'required|string|max:255',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'category_id' => 'required|string|max:255',
+                'subcategory_name' => 'required|string|max:255',
+            ]);
 
-        // Create a new category instance
-        $subcategory = new SubCategory();
-        $subcategory->category_id = $validatedData['category_id'];
-        $subcategory->name = $validatedData['subcategory_name'];
-        $subcategory->icon = $request->subcategory_icon;
-        $subcategory->save();
+            // Create a new category instance
+            $subcategory = new SubCategory();
+            $subcategory->category_id = $validatedData['category_id'];
+            $subcategory->name = $validatedData['subcategory_name'];
+            $subcategory->icon = $request->subcategory_icon;
+            $subcategory->save();
 
-        $notification = array(
-            'message' => 'created successfully!',
-            'alert-type' => 'success'
-        );
-        return redirect()->back()->with($notification);
+            $notification = array(
+                'message' => 'Created successfully!',
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            \Log::error('Error creating subcategory: ' . $e->getMessage());
+
+            $notification = array(
+                'message' => 'Error occurred while creating subcategory',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
     }
+
 
     public function getSubCategoryData($id)
     {
@@ -146,22 +204,35 @@ class AdminController extends Controller
 
     public function SubcategoryUpdate(Request $request)
     {
-        $subcategory_id = $request->input('subcategory_id');
-        $subcategory = SubCategory::findOrFail($subcategory_id);
+        try {
+            $subcategory_id = $request->input('subcategory_id');
+            $subcategory = SubCategory::findOrFail($subcategory_id);
 
-        $subcategory->category_id =  $request->input('category_id');
-        $subcategory->name = $request->input('subcategory_name');
-        $subcategory->icon = $request->input('subcategory_icon');
+            $subcategory->category_id =  $request->input('category_id');
+            $subcategory->name = $request->input('subcategory_name');
+            $subcategory->icon = $request->input('subcategory_icon');
 
-        $subcategory->save();
+            $subcategory->save();
 
-        $notification = array(
-            'message' => 'updated successfully',
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Updated successfully',
+                'alert-type' => 'success'
+            );
 
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            \Log::error('Error updating subcategory: ' . $e->getMessage());
+
+            $notification = array(
+                'message' => 'Error occurred while updating subcategory',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
     }
+
 
     //  <--------------------------------------------------------- SubCtegory Part End ------------------------------------------------------------------->
 
@@ -215,41 +286,105 @@ class AdminController extends Controller
 
     public function updateStatus(Request $request)
     {
+        try {
+            $sliderID = $request->input('sliderID');
+            $slider = Slider::findOrFail($sliderID);
 
-        $sliderID = $request->input('sliderID');
-        $slider = Slider::findOrFail($sliderID);
+            $slider->status = $request->input('status');
+            $slider->save();
 
-        $slider->status = $request->input('status');
-        $slider->save();
+            $notification =  [
+                'message' => "Update Successfully",
+                'alerttype' => 'success'
+            ];
 
-        $notification =  [
-            'message' => "Update Successfully",
-            'alerttype' => 'success'
-        ];
+            return response()->json($notification);
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            \Log::error('Error updating slider status: ' . $e->getMessage());
 
-        return response()->json($notification);
+            $notification = [
+                'message' => 'Error occurred while updating slider status',
+                'alerttype' => 'error'
+            ];
+
+            return response()->json($notification);
+        }
     }
+
+
     public function sliderDelete($id)
     {
-        $slider = Slider::findOrFail($id);
-        $slider->delete();
+        try {
+            $slider = Slider::findOrFail($id);
 
-        $notification = array(
-            'message' => 'Delete Successfully',
-            'alert-type' => 'success'
-        );
+            // Delete image from file system
+            $imagePath = public_path('images/slider/') . $slider->photo_name;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
 
-        return redirect()->back()->with($notification);
+            $slider->delete();
+
+            $notification = array(
+                'message' => 'Delete Successfully',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            $notification = array(
+                'message' => 'Error occurred while deleting slider.',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
     }
+
 
     //  <--------------------------------------------------------- Home Slider  End ------------------------------------------------------------------->
 
+    //  <--------------------------------------------------------- User Managment Start   ------------------------------------------------------------------->
 
     public function viewUser()
     {
         $user = User::all();
-        return view('admin.user.index',compact('user'));
+        return view('admin.user.index', compact('user'));
     }
 
+    public function userDelete($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            // Delete image from file system
+            $imagePath = public_path('images/user_profile/') . $user->image;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+
+            $user->delete();
+
+            $notification = array(
+                'message' => 'Delete Successfully',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            \Log::error('Error deleting user: ' . $e->getMessage());
+
+            $notification = array(
+                'message' => 'Error occurred while deleting user',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    //  <--------------------------------------------------------- User Managment End   ------------------------------------------------------------------->
 
 }
