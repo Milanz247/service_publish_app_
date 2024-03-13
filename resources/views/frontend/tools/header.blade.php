@@ -38,7 +38,11 @@
                                                 class="fas fa-dashboard"></i> Dashboard</a>
                                     @endif
                                 @else
-                                    @if (Route::is('/'))
+                                    @if (Route::is('/') ||
+                                            Route::is('frontend.filter.service') ||
+                                            Route::is('frontend.view.service') ||
+                                            Route::is('view.about') ||
+                                            Route::is('view.contact'))
                                         <a href="{{ route('login') }}" class="login_btn mx-3"><i class="fas fa-lock"></i>
                                             Login</a>
                                         <a href="{{ route('select.profile') }}" class="login_btn"><i
@@ -48,7 +52,7 @@
                                         <a href="{{ route('select.profile') }}" class="login_btn"><i
                                                 class="fas fa-lock"></i>
                                             Register</a>
-                                    @elseif(Route::is('register') || Route::is('select.profile') || Route::is('register.user') || Route::is('view.about') || Route::is('view.contact'))
+                                    @elseif(Route::is('register') || Route::is('select.profile') || Route::is('register.user'))
                                         <a href="{{ route('login') }}" class="login_btn"><i class="fas fa-lock"></i>
                                             Login</a>
                                     @endif
@@ -58,6 +62,14 @@
                     </div>
                 </div>
             </div>
+
+
+            {{-- Route::is('select.profile') ||
+            Route::is('register.user') ||
+            Route::is('view.about') ||
+            Route::is('view.contact') || Route::is('frontend.view.service') || Route::is('frontend.filter.service') --}}
+
+
         </div>
     </div>
     <div class="sub-header">
@@ -79,6 +91,12 @@
                                 <li class="nav-item ">
                                     <a class="nav-link {{ request()->routeIs('/') ? 'active' : '' }}"
                                         href="{{ route('/') }}">Home <span class="sr-only">(current)</span></a>
+                                </li>
+
+                                <li class="nav-item ">
+                                    <a class="nav-link {{ request()->routeIs('frontend.view.service') ? 'active' : '' }}"
+                                        href="{{ route('frontend.view.service') }}">Service <span
+                                            class="sr-only">(current)</span></a>
                                 </li>
 
                                 <li class="nav-item ">

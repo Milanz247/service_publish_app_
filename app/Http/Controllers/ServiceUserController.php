@@ -253,6 +253,7 @@ class ServiceUserController extends Controller
             ];
 
             return response()->json($notification);
+            
         } catch (\Exception $e) {
             $notification =  [
                 'message' => 'An error occurred while performing the action.',

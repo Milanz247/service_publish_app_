@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Slider;
 use App\Models\SubCategory;
+use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -90,7 +92,6 @@ class AdminController extends Controller
         return view('admin.subcategory.index', compact('subcatregory'));
     }
 
-
     public function subCategoryDelete($id)
     {
         $subcategory = SubCategory::findOrFail($id);
@@ -103,7 +104,6 @@ class AdminController extends Controller
 
         return redirect()->back()->with($notification);
     }
-
 
     public function getCategory()
     {
@@ -129,7 +129,6 @@ class AdminController extends Controller
             'message' => 'created successfully!',
             'alert-type' => 'success'
         );
-
         return redirect()->back()->with($notification);
     }
 
@@ -163,5 +162,84 @@ class AdminController extends Controller
     }
 
     //  <--------------------------------------------------------- SubCtegory Part End ------------------------------------------------------------------->
+
+
+
+    //  <--------------------------------------------------------- Home Slider  Start ------------------------------------------------------------------->
+
+    public function viewHomeSlider()
+    {
+        $slider = Slider::get();
+        return view('admin.home_slider.index', compact('slider'));
+    }
+
+    public function sliderStore(Request $request)
+    {
+        try {
+
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+
+            $imageName = time() . '.' . $request->image->extension();
+            $resizedImage = Image::make($request->image)->fit(320, 370)->encode($request->image->extension());
+            $resizedImage->save(public_path('images/slider/') . $imageName);
+
+            $slider = new Slider();
+            $slider->title = $request->title;
+            $slider->status = 1;
+            $slider->photo_name = $imageName;
+            $slider->save();
+
+            $notification = array(
+                'message' => 'Added Successfully',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+
+            $errorMessage = $e->getMessage();
+
+
+            $errorNotification = [
+                'message' => 'An error occurred: ' . $errorMessage,
+                'alert-type' => 'error'
+            ];
+
+            return redirect()->back()->with($errorNotification);
+        }
+    }
+
+    public function updateStatus(Request $request)
+    {
+
+        $sliderID = $request->input('sliderID');
+        $slider = Slider::findOrFail($sliderID);
+
+        $slider->status = $request->input('status');
+        $slider->save();
+
+        $notification =  [
+            'message' => "Update Successfully",
+            'alerttype' => 'success'
+        ];
+
+        return response()->json($notification);
+    }
+    public function sliderDelete($id)
+    {
+        $slider = Slider::findOrFail($id);
+        $slider->delete();
+
+        $notification = array(
+            'message' => 'Delete Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    //  <--------------------------------------------------------- Home Slider  End ------------------------------------------------------------------->
 
 }

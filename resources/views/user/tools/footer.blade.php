@@ -7,7 +7,8 @@
                         <div class="text-step1">
                             <h4>Subscribe to Newsletter</h4>
                             <div class="btext-heading mt-2" style="color:#acacac; font-size:14px;">
-                                <i class="fas fa-check-circle"></i>Cras nunc mauris, rhoncus eu justo at, egestas sagittis felis. Ut sed feugiat eros.
+                                <i class="fas fa-check-circle"></i>Cras nunc mauris, rhoncus eu justo at, egestas
+                                sagittis felis. Ut sed feugiat eros.
                             </div>
                         </div>
                     </div>
@@ -25,8 +26,11 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="about-jobby">
-                    <a href="index.html"><img src="images/logo1.svg" alt=""></a>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu purus et diam blandit vehicula sit amet sed metus. Fusce condimentum non neque at fringilla. Aenean malesuada aliquet tincidunt.</p>
+                    <a href="index.html"><img style="width: 100px; height:50px;"
+                            src="{{ asset('frontend/images/jobuy-logo.png') }}" alt=""></a>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu purus et diam blandit
+                        vehicula sit amet sed metus. Fusce condimentum non neque at fringilla. Aenean malesuada aliquet
+                        tincidunt.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3">
@@ -71,7 +75,8 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="copyright">
-                        <i class="far fa-copyright"></i>Copyright 2019 <span>Jobby</span> by <a href="about.html#">Gambolthemes</a>. All Right Reserved.
+                        <i class="far fa-copyright"></i>Copyright 2019 <span>Jobby</span> by <a
+                            href="about.html#">Gambolthemes</a>. All Right Reserved.
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">

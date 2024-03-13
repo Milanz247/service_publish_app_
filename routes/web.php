@@ -25,6 +25,8 @@ route::get('/', [FrontendController::class, 'welcome'])->name('/');
 route::get('/redirect', [HomeController::class, 'redirect']);
 
 route::get('/get-subcategory', [FrontendController::class, 'getSubcategory']);
+route::get('/frontend-view-service', [FrontendController::class, 'viewService'])->name('frontend.view.service');
+route::get('/frontend-filter-service', [FrontendController::class, 'filterService'])->name('frontend.filter.service');
 
 
 Route::get('/select-profile', function () {
@@ -123,8 +125,14 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     route::post('/profile-update', [AdminProfileController::class, 'profileUpdate'])->name('admin.profile.update');
     Route::post('/password/update',  [AdminProfileController::class, 'updatePassword'])->name('password.update');
 
+    route::get('/home-slider', [AdminController::class, 'viewHomeSlider'])->name('admin.homeslider.view');
+    route::post('/slider-store', [AdminController::class, 'sliderStore'])->name('slider.store');
+    route::post('/slider-update-status',[AdminController::class,'updateStatus'])->name('slider.updateStatus');
+    route::get('/slider-delete/{id}', [AdminController::class, 'sliderDelete'])->name('slider.delete');
 
-    // route::get('/',[::class,''])->name('');
+
+
+    // route::get('/',[::class,''])->name('slider.updateStatus');
     // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
 
