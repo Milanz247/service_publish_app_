@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 route::get('/', [FrontendController::class, 'welcome'])->name('/');
 route::get('/redirect', [HomeController::class, 'redirect']);
 
+
 route::get('/get-subcategory', [FrontendController::class, 'getSubcategory']);
 route::get('/frontend-view-service', [FrontendController::class, 'viewService'])->name('frontend.view.service');
 route::get('/frontend-filter-service', [FrontendController::class, 'filterService'])->name('frontend.filter.service');
@@ -101,6 +102,7 @@ require __DIR__ . '/auth.php';
 
 // Admin Routes
 Route::get('/admin/dashboard', function () {
+
     return view('admin.index');
 })->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
@@ -127,9 +129,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
 
     route::get('/home-slider', [AdminController::class, 'viewHomeSlider'])->name('admin.homeslider.view');
     route::post('/slider-store', [AdminController::class, 'sliderStore'])->name('slider.store');
-    route::post('/slider-update-status',[AdminController::class,'updateStatus'])->name('slider.updateStatus');
+    route::post('/slider-update-status', [AdminController::class, 'updateStatus'])->name('slider.updateStatus');
     route::get('/slider-delete/{id}', [AdminController::class, 'sliderDelete'])->name('slider.delete');
 
+    route::get('/user-view', [AdminController::class, 'viewUser'])->name('admin.user.view');
 
 
     // route::get('/',[::class,''])->name('slider.updateStatus');
