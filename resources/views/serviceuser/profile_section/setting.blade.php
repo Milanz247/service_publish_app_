@@ -178,10 +178,13 @@
                                                     class="sizer" style=""></span>
                                                 <div class="default text">Skill Category</div>
                                                 <div class="menu transition hidden" tabindex="-1">
-                                                    <div class="item selected" data-value="angular">
-                                                        Angular</div>
-                                                    <div class="item" data-value="css">CSS</div>
+                                                    @foreach ($subcategories as $subcategory)
+                                                        <div class="item" data-value="{{ $subcategory->name }}">
+                                                            {{ $subcategory->name }}
+                                                        </div>
+                                                    @endforeach
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -206,8 +209,8 @@
                                                 <div class="default text">Select Language</div>
                                                 <div class="menu transition hidden" tabindex="-1">
                                                     <div class="item" data-value="English">English</div>
-                                                    <div class="item" data-value="Hindi">Hindi</div>
-                                                    <div class="item" data-value="Punjabi">Punjabi</div>
+                                                    <div class="item" data-value="Hindi">Tamil</div>
+                                                    <div class="item" data-value="Punjabi">Sinhala</div>
 
                                                 </div>
                                             </div>

@@ -9,6 +9,7 @@ use App\Models\Reviewimg;
 use App\Models\ServiceRequest;
 use App\Models\Service;
 use App\Models\ServiceImg;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -27,8 +28,10 @@ class UserController extends Controller
         $locations = Service::distinct()->pluck('service_location')->toArray();
         $categories = Category::all();
 
+        $slider = Slider::where('status', 1)->take(6)->get();
 
-        return view('user.index')->with(compact('foundUsers','categories','locations'));
+        return view('user.index')->with(compact('foundUsers', 'categories', 'locations', 'slider'));
+
     }
 
     public function viewAbout()
