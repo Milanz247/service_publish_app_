@@ -22,7 +22,7 @@
             <ul>
                 <li>
                     <a href="my_freelancer_profile.html#" class="web_link">
-                        <i class="fab fa-whatsapp"></i>98765434 </a>
+                        <i class="fab fa-whatsapp"></i>{{ Auth::user()->phone }} </a>
                 </li>
                 <li><a href="my_freelancer_profile.html#" class="web_link"><i
                             class="far fa-user"></i>{{ Auth::user()->phone }}</a></li>
@@ -31,6 +31,26 @@
         <div class="group_skills_bar">
             <h6>Profile Completeness</h6>
             <div class="group_bar1">
+
+                {{-- @php
+                    use App\Models\User; // Assuming your Review model is located at app/Models/Review.php
+
+                    // Retrieve the row from the database
+                    $row = User::find(Auth::user()->id);
+
+                    $nullColumnsCount = 0;
+
+                    // Loop through the attributes of the row
+                    foreach ($row->getAttributes() as $attribute => $value) {
+                        // Check if the value is null
+                        if ($value === null) {
+                            $nullColumnsCount++;
+                        }
+                    }
+
+                @endphp
+
+                {{ $nullColumnsCount }} --}}
                 <span>85%</span>
                 <div class="progress skill_process">
                     <div class="progress-bar progress_bar_skills" role="progressbar" style="width: 85%;"
@@ -43,14 +63,37 @@
             <div class="rtl_left">
                 <h6>Rating</h6>
             </div>
+            @php
+                use App\Models\Review;
+                use Illuminate\Support\Facades\Auth; 
+                $count = 0;
+                $rating = 0;
+                $reviewsCount = Review::where('service_user_id', Auth::user()->id)->count();
+
+                if ($reviewsCount > 0 && $reviewsCount < 2) {
+                    $count = 1;
+                    $rating = 1;
+                } elseif ($reviewsCount > 2 && $reviewsCount < 5) {
+                    $count = 2;
+                    $rating = 2;
+                } elseif ($reviewsCount > 5 && $reviewsCount < 7) {
+                    $count = 3;
+                    $rating = 3;
+                } elseif ($reviewsCount > 7 && $reviewsCount < 9) {
+                    $count = 4;
+                    $rating = 4;
+                } elseif ($reviewsCount > 9) {
+                    $count = 5;
+                    $rating = 4.9;
+                }
+            @endphp
             <div class="rtl_right">
                 <div class="star">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <span>4.9</span>
+                    @for ($i = 0; $i < $count; $i++)
+                        <i class="fas fa-star"></i>
+                    @endfor
+
+                    <span>{{ $rating }}</span>
                 </div>
             </div>
         </div>
@@ -93,11 +136,16 @@
                     </div>
                 </li>
                 <li>
+                    @php
+                        use App\Models\ServiceRequest;
+                        $jobdone = ServiceRequest::where('service_user_id', Auth::user()->id)->count();
+
+                    @endphp
                     <div class="rtl_left2">
                         <h6>Job Done</h6>
                     </div>
                     <div class="rtl_right2">
-                        <span>69</span>
+                        <span>{{ $jobdone }}</span>
                     </div>
                 </li>
             </ul>

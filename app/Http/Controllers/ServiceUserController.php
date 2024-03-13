@@ -7,6 +7,8 @@ use App\Models\Review;
 use App\Models\Service;
 use App\Models\ServiceImg;
 use App\Models\ServiceRequest;
+use App\Models\Slider;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -23,14 +25,38 @@ class ServiceUserController extends Controller
 
     public function viewHome()
     {
-        return view('serviceuser.index');
+        $users = Service::distinct()->pluck('service_user_id')->toArray();
+        $foundUsers = User::whereIn('id', $users)->get();
+
+        $locations = Service::distinct()->pluck('service_location')->toArray();
+        $categories = Category::all();
+
+        $slider = Slider::where('status', 1)->take(6)->get();
+
+        return view('serviceuser.index')->with(compact('foundUsers', 'categories', 'locations', 'slider'));
     }
 
     public function viewDashboard()
     {
-        return view('serviceuser.profile_section.dashboard');
+        $jobsCount = ServiceRequest::where('status', 'complete')
+            ->where('service_user_id', Auth::user()->id)
+            ->count();
+
+        $newjobs = ServiceRequest::where('status', 'new')
+            ->where('service_user_id', Auth::user()->id)
+            ->count();
+
+        return view('serviceuser.profile_section.dashboard', compact('jobsCount', 'newjobs'));
     }
 
+    public function viewReviews()
+    {
+        $reviews = Review::with('user')->where('service_user_id', Auth::user()->id)->get();
+        return view('serviceuser.profile_section.review', compact('reviews'));
+    }
+
+
+    //  <--------------------------------------------------------- Service User Profile Start ------------------------------------------------------------------->
     public function viewProfile()
     {
         return view('serviceuser.profile_section.profile');
@@ -38,47 +64,13 @@ class ServiceUserController extends Controller
 
     public function viewSetting(Request $request)
     {
+
         return view('serviceuser.profile_section.setting', [
 
             'user' => $request->user(),
+            'subcategories' => SubCategory::all(),
         ]);
     }
-
-    public function viewReviews()
-    {
-        $reviews = Review::with('user')->where('service_user_id',Auth::user()->id)->get();
-        return view('serviceuser.profile_section.review', compact('reviews'));
-    }
-    public function viewOrderList()
-    {
-        $statuses = ['new', 'accept', 'decline', 'complete'];
-        $orders = [];
-
-        foreach ($statuses as $status) {
-            $orders[$status] = ServiceRequest::with('subcategory', 'user')
-                ->where('status', $status)
-                ->latest()
-                ->get();
-        }
-        return view('serviceuser.profile_section.order_list', compact('orders'));
-    }
-
-    public function viewMessages()
-    {
-        return view('serviceuser.profile_section.messages');
-    }
-
-
-
-    public function viewServiceSection()
-    {
-
-        $services = Service::with('category', 'subcategory')->where('service_user_id', Auth::user()->id)->get();
-        $categories = Category::get();
-        return view('serviceuser.profile_section.service_section')->with(compact('categories', 'services'));
-    }
-
-
 
     public function updateProfileImage(Request $request)
     {
@@ -173,6 +165,17 @@ class ServiceUserController extends Controller
             return $errorNotification;
         }
     }
+    //  <--------------------------------------------------------- Service User Profile End ------------------------------------------------------------------->
+
+
+    //  <--------------------------------------------------------- Service User register Service Start ------------------------------------------------------------------->
+    public function viewServiceSection()
+    {
+
+        $services = Service::with('category', 'subcategory')->where('service_user_id', Auth::user()->id)->get();
+        $categories = Category::get();
+        return view('serviceuser.profile_section.service_section')->with(compact('categories', 'services'));
+    }
 
     public function registerService(Request $request)
     {
@@ -233,6 +236,25 @@ class ServiceUserController extends Controller
 
         return redirect()->back()->with($notification);
     }
+    //  <--------------------------------------------------------- Service User register Service End ------------------------------------------------------------------->
+
+
+
+    //  <--------------------------------------------------------- Service User Order List Start ------------------------------------------------------------------->
+    public function viewOrderList()
+    {
+        $statuses = ['new', 'accept', 'decline', 'complete'];
+        $orders = [];
+
+        foreach ($statuses as $status) {
+            $orders[$status] = ServiceRequest::with('subcategory', 'user')
+                ->where('status', $status)
+                ->latest()
+                ->get();
+        }
+        return view('serviceuser.profile_section.order_list', compact('orders'));
+    }
+
 
     public function updateStatus(Request $request)
     {
@@ -253,7 +275,6 @@ class ServiceUserController extends Controller
             ];
 
             return response()->json($notification);
-            
         } catch (\Exception $e) {
             $notification =  [
                 'message' => 'An error occurred while performing the action.',
@@ -262,5 +283,14 @@ class ServiceUserController extends Controller
 
             return response()->json($notification, 500);
         }
+    }
+    //  <--------------------------------------------------------- Service User Order List End ------------------------------------------------------------------->
+
+
+
+
+    public function viewMessages()
+    {
+        return view('serviceuser.profile_section.messages');
     }
 }
