@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Slider;
 use App\Models\SubCategory;
+use App\Models\User;
 use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
 
     //  <--------------------------------------------------------- Ctegory Part Start ------------------------------------------------------------------->
+
     public function viewCategory()
     {
         $catregory = Category::get();
@@ -241,5 +243,13 @@ class AdminController extends Controller
     }
 
     //  <--------------------------------------------------------- Home Slider  End ------------------------------------------------------------------->
+
+
+    public function viewUser()
+    {
+        $user = User::all();
+        return view('admin.user.index',compact('user'));
+    }
+
 
 }

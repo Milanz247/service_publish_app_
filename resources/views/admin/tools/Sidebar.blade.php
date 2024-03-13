@@ -17,30 +17,20 @@
         </div>
         <ul class="metismenu" id="menu">
 
-
-
             <li><a href="{{ route('admin.dashboard') }}" class="" aria-expanded="false">
                     <i class="flaticon-025-dashboard"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-
-            {{--
             <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-381-user-2"></i>
-                    <span class="nav-text">Jobs</span>
+                    <i class="flaticon-381-user-1"></i>
+                    <span class="nav-text">User</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="job-list.html">Job Lists</a></li>
-                    <li><a href="job-view.html">Job View</a></li>
-                    <li><a href="job-application.html">Job Application</a></li>
-                    <li><a href="apply-job.html">Apply Job</a></li>
-                    <li><a href="new-job.html">New Job</a></li>
-                    <li><a href="user-profile.html">User Profile</a></li>
+                    <li><a href="{{ route('admin.user.view') }}">User Managment</a></li>
+
                 </ul>
-            </li> --}}
-
-
+            </li>
             <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
                     <i class="flaticon-043-menu"></i>
                     <span class="nav-text">Category</span>
@@ -50,6 +40,8 @@
                     <li><a href="{{ route('admin.subcategory.view') }}">Sub Category</a></li>
                 </ul>
             </li>
+
+
 
             <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
                     <i class="flaticon-086-star"></i>
