@@ -25,90 +25,42 @@
                 </div>
             </div>
         </div>
+
+
         <div class="banner-slider">
             <div class="owl-carousel bnnr-owl owl-theme">
-                <div class="item">
-                    <div class="featured-cities">
-                        <a href="index.html#">
-                            <div class="feature-img">
-                                <img src="{{ asset('frontend/images/homepage/owl-bnnr/img-1.jpg') }}" alt="">
-                                <div class="overly-bg"></div>
-                            </div>
-                        </a>
-                        <a href="index.html#">
-                            <div class="featured-text">
-                                <div class="city-title">California</div>
-                                <ins>125 Jobs</ins>
-                            </div>
-                        </a>
+                @foreach ($slider as $slider)
+                    <div class="item">
+                        <div class="featured-cities">
+                            <a href="">
+                                <div class="feature-img">
+                                    <img src="{{ asset('images/slider/' . $slider->photo_name) }}" class="img-thumbnail"
+                                        alt="Cinque Terre">
+                                    <div class="overly-bg"></div>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div class="featured-text">
+                                    <div class="city-title">{{ $slider->title }}</div>
+                                    <ins>125 Jobs</ins>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="item">
-                    <div class="featured-cities">
-                        <a href="index.html#">
-                            <div class="feature-img">
-                                <img src="{{ asset('frontend/images/homepage/owl-bnnr/img-2.jpg') }}" alt="">
-                                <div class="overly-bg"></div>
-                            </div>
-                        </a>
-                        <a href="index.html#">
-                            <div class="featured-text">
-                                <div class="city-title">Austin</div>
-                                <ins>200 Jobs</ins>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="featured-cities">
-                        <a href="index.html#">
-                            <div class="feature-img">
-                                <img src="{{ asset('frontend/images/homepage/owl-bnnr/img-3.jpg') }}" alt="">
-                                <div class="overly-bg"></div>
-                            </div>
-                        </a>
-                        <a href="index.html#">
-                            <div class="featured-text">
-                                <div class="city-title">Los Angeles</div>
-                                <ins>25 Jobs</ins>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="featured-cities">
-                        <a href="index.html#">
-                            <div class="feature-img">
-                                <img src="{{ asset('frontend/images/homepage/owl-bnnr/img-4.jpg') }}" alt="">
-                                <div class="overly-bg"></div>
-                            </div>
-                        </a>
-                        <a href="index.html#">
-                            <div class="featured-text">
-                                <div class="city-title">San francisco</div>
-                                <ins>12 Jobs</ins>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="featured-cities">
-                        <a href="index.html#">
-                            <div class="feature-img">
-                                <img src="{{ asset('frontend/images/homepage/owl-bnnr/img-5.jpg') }}" alt="">
-                                <div class="overly-bg"></div>
-                            </div>
-                        </a>
-                        <a href="index.html#">
-                            <div class="featured-text">
-                                <div class="city-title">Tulsa</div>
-                                <ins>190 Jobs</ins>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                @endforeach
+
+
             </div>
         </div>
+
+
+
+
+
+
+
+
+
         <div class="achivements">
             <div class="container">
                 <div class="row text-center">
@@ -127,6 +79,7 @@
                 </div>
             </div>
         </div>
+
         <div class="we-offers">
             <div class="container">
                 <div class="row">
@@ -179,6 +132,9 @@
             </div>
         </div>
 
+
+
+
         <div class="all-categories">
             <div class="container">
                 <div class="row">
@@ -194,6 +150,7 @@
                     <div class="col-md-12 col-12">
                         <div class="job-categories mt-30">
                             <div class="row no-gutters">
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -204,6 +161,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -214,6 +172,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -224,6 +183,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -234,6 +194,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -244,6 +205,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -254,6 +216,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -264,6 +227,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -274,6 +238,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -284,6 +249,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -294,6 +260,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -304,6 +271,7 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <div class="p-category">
                                         <a href="index.html#" title="">
@@ -314,12 +282,18 @@
                                         </a>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
         <div class="featured-candidates">
             <div class="container">
                 <div class="row">
@@ -410,6 +384,7 @@
                 </div>
             </div>
         </div>
+
         <div class="all-categories">
             <div class="container">
                 <div class="row">

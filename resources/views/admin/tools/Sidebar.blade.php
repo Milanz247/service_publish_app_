@@ -48,13 +48,18 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('admin.category.view') }}">Category</a></li>
                     <li><a href="{{ route('admin.subcategory.view') }}">Sub Category</a></li>
-                    {{-- <li><a href="job-application.html">Job Application</a></li>
-                <li><a href="apply-job.html">Apply Job</a></li>
-                <li><a href="new-job.html">New Job</a></li>
-                <li><a href="user-profile.html">User Profile</a></li> --}}
                 </ul>
             </li>
 
+            <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-086-star"></i>
+                    <span class="nav-text">Home Slider</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('admin.homeslider.view') }}">view Home slider</a></li>
+
+                </ul>
+            </li>
 
             {{--
             <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
