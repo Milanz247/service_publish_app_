@@ -9,49 +9,13 @@
         </div>
         <!-- row -->
         <div class="row">
-            <div class="col-xl-3 col-lg-4">
-                <div class="clearfix">
-                    <div class="card card-bx author-profile m-b30">
-                        <div class="card-body">
-                            <div class="p-5">
-                                <div class="author-profile">
-                                    <div class="author-media">
-                                        <img src="images/profile/pic1.jpg" alt="">
-                                        <div class="upload-link" title="" data-bs-toggle="tooltip"
-                                            data-placement="right" data-original-title="update">
-                                            <input type="file" class="update-flie">
-                                            <i class="fa fa-camera"></i>
-                                        </div>
-                                    </div>
-                                    <div class="author-info">
-                                        <h6 class="title">John</h6>
-                                        <span>Developer</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="info-list">
-                                <ul>
-                                    <li><a href="app-profile.html">Models</a><span>36</span></li>
-                                    <li><a href="app-profile.html">Gallery</a><span>3</span></li>
-                                    <li><a href="app-profile.html">Lessons</a><span>1</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="input-group mb-3">
-                                <div class="form-control rounded text-center">Portfolio</div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-xl-6 col-lg-8">
                 <div class="card  card-bx m-b30">
                     <div class="card-header">
                         <h4 class="card-title">Account setup</h4>
                     </div>
-                    <form class="profile-form" action="{{ route('admin.profile.update') }}" method="post">
+                    <form class="profile-form" action="{{ route('admin.profile.update') }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -94,7 +58,14 @@
                                     <label class="form-label">Email adress</label>
                                     <input type="text" class="form-control" name="email" value="{{ $admin->email }}">
                                 </div>
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label">Upload Files</label>
+                                    <input class="form-control" type="file" name="image" id="inputImage">
+                                </div>
 
+                                <div class="col-sm-6 m-b30">
+                                    <div id="previewImg"></div>
+                                </div>
 
                             </div>
                         </div>
@@ -105,7 +76,7 @@
                 </div>
             </div>
 
-            {{-- <div class="col-xl-3 col-lg-4">
+            <div class="col-xl-4 col-lg-4">
                 <div class="card  card-bx m-b30">
                     <div class="card-header">
                         <h4 class="card-title">Change Password</h4>
@@ -136,7 +107,7 @@
                         </div>
                     </form>
                 </div>
-            </div> --}}
+            </div>
 
 
 
@@ -144,4 +115,27 @@
 
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#inputImage').change(function(event) {
+                var preview = $('#previewImg');
+                var file = event.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function() {
+                    var imgElement = $('<img>').attr('src', reader.result).css({
+                        'max-width': '100%',
+                        'max-height': '200px'
+                    });
+                    preview.empty().append(imgElement);
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
 @endsection

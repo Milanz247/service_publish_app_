@@ -27,8 +27,13 @@ class AdminProfileController extends Controller
                 'phone' => 'nullable|string|max:255'
             ]);
 
+
+
             $id = Auth::user()->id;
             $admin = Admin::find($id);
+
+
+
 
             $admin->name = $validatedData['name'];
             $admin->lname = $request->lname;
@@ -36,6 +41,24 @@ class AdminProfileController extends Controller
             $admin->birth = $request->birth;
             $admin->email = $validatedData['email'];
             $admin->phone = $validatedData['phone'];
+
+            if ($request->image) {
+                if ($admin->image) {
+                    $previousImagePath = public_path('images/user_profile/') . $admin->image;
+                    if (file_exists($previousImagePath)) {
+                        unlink($previousImagePath);
+                    }
+                }
+
+                $imageName = time() . '.' . $request->image->extension();
+
+                $resizedImage = Image::make($request->image)->fit(150, 150)->encode($request->image->extension());
+
+                $resizedImage->save(public_path('images/admin_user_profile/') . $imageName);
+            }
+
+            $admin->image = $imageName;
+
             $admin->save();
 
             $notification = array(
@@ -54,6 +77,9 @@ class AdminProfileController extends Controller
             return $errorNotification;
         }
     }
+
+
+
 
 
     public function updatePassword(Request $request)

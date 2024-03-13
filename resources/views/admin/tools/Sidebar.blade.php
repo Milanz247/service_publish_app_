@@ -3,7 +3,12 @@
         <div class="dropdown header-profile2 ">
             <a class="nav-link " href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                 <div class="header-info2 d-flex align-items-center">
-                    <img src="images/profile/pic1.jpg" alt="">
+                    @if (Auth::user()->image)
+                        <img src="{{ asset('images/admin_user_profile/' . Auth::user()->image) }}" class="img-thumbnail"
+                            alt="Cinque Terre">
+                    @else
+                        <img src="{{ asset('images/profile/userd.png') }}" class="img-thumbnail" alt="Cinque Terre">
+                    @endif
                     <div class="d-flex align-items-center sidebar-info">
                         <div>
                             <span class="font-w400 d-block">{{ Auth::user()->name }}</span>
