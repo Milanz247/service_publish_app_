@@ -58,6 +58,17 @@
                 </ul>
             </li>
 
+
+
+            <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-086-star"></i>
+                    <span class="nav-text">Service</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('admin.service.view') }}">All Ative Services</a></li>
+
+                </ul>
+            </li>
             {{--
             <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                 <i class="fa-solid fa-gear"></i>
