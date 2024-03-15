@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Service;
 use App\Models\Slider;
 use App\Models\SubCategory;
 use App\Models\User;
@@ -387,4 +388,33 @@ class AdminController extends Controller
 
     //  <--------------------------------------------------------- User Managment End   ------------------------------------------------------------------->
 
+    public function serviceView()
+    {
+        $service = Service::with('user','subcategory')->get();
+        return view('admin.services.index',compact('service'));
+    }
+
+    public function serviceDelete($id)
+    {
+        try {
+            $service = Service::findOrFail($id);
+
+
+            $service->delete();
+
+            $notification = array(
+                'message' => 'Delete Successfully',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+            $notification = array(
+                'message' => 'Error occurred while deleting slider.',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
+    }
 }

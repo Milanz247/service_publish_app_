@@ -18,8 +18,8 @@ class AdminSeeder extends Seeder
         // Create a single admin user
         DB::table('admins')->insert([
             'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('12345678'),
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin'),
         ]);
     }
 }

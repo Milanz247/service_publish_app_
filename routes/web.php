@@ -135,8 +135,14 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     route::get('/user-view', [AdminController::class, 'viewUser'])->name('admin.user.view');
     route::get('/user-delete/{id}', [AdminController::class, 'userDelete'])->name('user.delete');
 
+    route::get('/service-view',[AdminController::class,'serviceView'])->name('admin.service.view');
+    route::get('/service-delete/{id}', [AdminController::class, 'serviceDelete'])->name('service.delete');
 
-    // route::get('/',[::class,''])->name('slider.updateStatus');
+
+
+
+
+
     // route::get('/',[::class,''])->name('');
     // route::get('/',[::class,''])->name('');
 
